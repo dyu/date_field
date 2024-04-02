@@ -13,7 +13,7 @@ class MaterialTimePickerOptions {
     this.errorInvalidText,
     this.hourLabelText,
     this.minuteLabelText,
-    this.orientation,
+    //this.orientation,
   });
 
   /// See parameter `builder` in [showTimePicker].
@@ -48,7 +48,7 @@ class MaterialTimePickerOptions {
   final String? minuteLabelText;
 
   /// See [TimePickerDialog.orientation].
-  final Orientation? orientation;
+  //final Orientation? orientation;
 
   @override
   bool operator ==(Object other) =>
@@ -63,8 +63,8 @@ class MaterialTimePickerOptions {
           helpText == other.helpText &&
           errorInvalidText == other.errorInvalidText &&
           hourLabelText == other.hourLabelText &&
-          minuteLabelText == other.minuteLabelText &&
-          orientation == other.orientation;
+          minuteLabelText == other.minuteLabelText;// &&
+          //orientation == other.orientation;
 
   @override
   int get hashCode =>
@@ -76,6 +76,6 @@ class MaterialTimePickerOptions {
       helpText.hashCode ^
       errorInvalidText.hashCode ^
       hourLabelText.hashCode ^
-      minuteLabelText.hashCode ^
-      orientation.hashCode;
+      minuteLabelText.hashCode;// ^
+      //orientation.hashCode;
 }

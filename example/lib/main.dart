@@ -47,11 +47,11 @@ class MyHomePage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('date_field Showcase'),
         ),
-        body: const SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
-              children: <Widget>[
+              children: const <Widget>[
                 SizedBox(height: 16.0),
                 Fields(),
                 SizedBox(height: 32.0),

@@ -7,7 +7,7 @@ class CupertinoDatePickerOptions {
     this.builder,
     this.useRootNavigator = true,
     this.minuteInterval = 1,
-    this.showDayOfWeek = false,
+    //this.showDayOfWeek = false,
     this.saveText,
     this.cancelText,
     this.modalTitleText,
@@ -26,7 +26,7 @@ class CupertinoDatePickerOptions {
   final int minuteInterval;
 
   /// See [CupertinoDatePicker.showDayOfWeek].
-  final bool showDayOfWeek;
+  //final bool showDayOfWeek;
 
   /// The text to display on the save button.
   ///

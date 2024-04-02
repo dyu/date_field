@@ -20,8 +20,8 @@ class MaterialDatePickerOptions {
     this.fieldHintText,
     this.fieldLabelText,
     this.keyboardType,
-    this.switchToInputEntryModeIcon,
-    this.switchToCalendarEntryModeIcon,
+    //this.switchToInputEntryModeIcon,
+    //this.switchToCalendarEntryModeIcon,
   });
 
   /// See [DatePickerDialog.currentDate].
@@ -77,10 +77,10 @@ class MaterialDatePickerOptions {
   final TextInputType? keyboardType;
 
   /// See [DatePickerDialog.switchToInputEntryModeIcon].
-  final Icon? switchToInputEntryModeIcon;
+  //final Icon? switchToInputEntryModeIcon;
 
   /// See [DatePickerDialog.switchToCalendarEntryModeIcon].
-  final Icon? switchToCalendarEntryModeIcon;
+  //final Icon? switchToCalendarEntryModeIcon;
 
   @override
   bool operator ==(Object other) =>
@@ -102,9 +102,9 @@ class MaterialDatePickerOptions {
           errorInvalidText == other.errorInvalidText &&
           fieldHintText == other.fieldHintText &&
           fieldLabelText == other.fieldLabelText &&
-          keyboardType == other.keyboardType &&
-          switchToInputEntryModeIcon == other.switchToInputEntryModeIcon &&
-          switchToCalendarEntryModeIcon == other.switchToCalendarEntryModeIcon;
+          keyboardType == other.keyboardType;// &&
+          //switchToInputEntryModeIcon == other.switchToInputEntryModeIcon &&
+          //switchToCalendarEntryModeIcon == other.switchToCalendarEntryModeIcon;
 
   @override
   int get hashCode =>
@@ -123,7 +123,7 @@ class MaterialDatePickerOptions {
       errorInvalidText.hashCode ^
       fieldHintText.hashCode ^
       fieldLabelText.hashCode ^
-      keyboardType.hashCode ^
-      switchToInputEntryModeIcon.hashCode ^
-      switchToCalendarEntryModeIcon.hashCode;
+      keyboardType.hashCode;// ^
+      //switchToInputEntryModeIcon.hashCode ^
+      //switchToCalendarEntryModeIcon.hashCode;
 }

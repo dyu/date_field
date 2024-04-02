@@ -27,17 +27,23 @@ enum DateTimeFieldPickerMode {
   date,
   dateAndTime;
 
-  DateFormat toDateFormat() => switch (this) {
-        DateTimeFieldPickerMode.time => DateFormat.jm(),
-        DateTimeFieldPickerMode.date => DateFormat.yMMMMd(),
-        DateTimeFieldPickerMode.dateAndTime => DateFormat.yMd().add_jm(),
-      };
-
-  CupertinoDatePickerMode toCupertinoDatePickerMode() => switch (this) {
-        DateTimeFieldPickerMode.time => CupertinoDatePickerMode.time,
-        DateTimeFieldPickerMode.date => CupertinoDatePickerMode.date,
-        DateTimeFieldPickerMode.dateAndTime => CupertinoDatePickerMode.dateAndTime,
-      };
+  DateFormat toDateFormat() {
+    switch (this) {
+      case DateTimeFieldPickerMode.time: return DateFormat.jm();
+      case DateTimeFieldPickerMode.date: return DateFormat.yMMMMd();
+      case DateTimeFieldPickerMode.dateAndTime: return DateFormat.yMd().add_jm();
+      default: return DateFormat.yMMMMd();
+    }
+  }
+  
+  CupertinoDatePickerMode toCupertinoDatePickerMode() {
+    switch (this) {
+      case DateTimeFieldPickerMode.time: return CupertinoDatePickerMode.time;
+      case DateTimeFieldPickerMode.date: return CupertinoDatePickerMode.date;
+      case DateTimeFieldPickerMode.dateAndTime: return CupertinoDatePickerMode.dateAndTime;
+      default: return CupertinoDatePickerMode.date;
+    }
+  }
 }
 
 /// [DateTimeField]
@@ -499,7 +505,7 @@ class _DateTimeFieldState extends State<DateTimeField> {
       confirmText: widget.materialTimePickerOptions.confirmText,
       hourLabelText: widget.materialTimePickerOptions.hourLabelText,
       minuteLabelText: widget.materialTimePickerOptions.minuteLabelText,
-      orientation: widget.materialTimePickerOptions.orientation,
+      //orientation: widget.materialTimePickerOptions.orientation,
     );
   }
 
@@ -528,42 +534,51 @@ class _DateTimeFieldState extends State<DateTimeField> {
       helpText: widget.materialDatePickerOptions.helpText,
       keyboardType: widget.materialDatePickerOptions.keyboardType,
       selectableDayPredicate: widget.materialDatePickerOptions.selectableDayPredicate,
-      switchToCalendarEntryModeIcon: widget.materialDatePickerOptions.switchToCalendarEntryModeIcon,
-      switchToInputEntryModeIcon: widget.materialDatePickerOptions.switchToInputEntryModeIcon,
+      //switchToCalendarEntryModeIcon: widget.materialDatePickerOptions.switchToCalendarEntryModeIcon,
+      //switchToInputEntryModeIcon: widget.materialDatePickerOptions.switchToInputEntryModeIcon,
       textDirection: widget.materialDatePickerOptions.textDirection,
       useRootNavigator: widget.materialDatePickerOptions.useRootNavigator,
     );
   }
+  
+  DateTime resolveInitialDateTime() {
+    switch (widget.mode) {
+      case DateTimeFieldPickerMode.time: return _initialPickerDateTime;
+      case DateTimeFieldPickerMode.date: return DateUtils.dateOnly(_initialPickerDateTime);
+      case DateTimeFieldPickerMode.dateAndTime: return _initialPickerDateTime;
+      default: return DateUtils.dateOnly(_initialPickerDateTime);
+    }
+  }
+  
+  DateTime resolveFirstDate() {
+    switch (widget.mode) {
+      case DateTimeFieldPickerMode.time: return widget.firstDate;
+      case DateTimeFieldPickerMode.date: return DateUtils.dateOnly(widget.firstDate);
+      case DateTimeFieldPickerMode.dateAndTime: return widget.firstDate;
+      default: return DateUtils.dateOnly(widget.firstDate);
+    }
+  }
+  
+  DateTime resolveLastDate() {
+    switch (widget.mode) {
+      case DateTimeFieldPickerMode.time: return widget.lastDate;
+      case DateTimeFieldPickerMode.date: return DateUtils.dateOnly(widget.lastDate);
+      case DateTimeFieldPickerMode.dateAndTime: return widget.lastDate;
+      default: return DateUtils.dateOnly(widget.lastDate);
+    }
+  }
 
   Future<DateTime?> _showCupertinoPicker() async {
-    final DateTime initialDateTime = switch (widget.mode) {
-      DateTimeFieldPickerMode.time => _initialPickerDateTime,
-      DateTimeFieldPickerMode.date => DateUtils.dateOnly(_initialPickerDateTime),
-      DateTimeFieldPickerMode.dateAndTime => _initialPickerDateTime,
-    };
-
-    final DateTime firstDate = switch (widget.mode) {
-      DateTimeFieldPickerMode.time => widget.firstDate,
-      DateTimeFieldPickerMode.date => DateUtils.dateOnly(widget.firstDate),
-      DateTimeFieldPickerMode.dateAndTime => widget.firstDate,
-    };
-
-    final DateTime lastDate = switch (widget.mode) {
-      DateTimeFieldPickerMode.time => widget.lastDate,
-      DateTimeFieldPickerMode.date => DateUtils.dateOnly(widget.lastDate),
-      DateTimeFieldPickerMode.dateAndTime => widget.lastDate,
-    };
-
     return showCupertinoModalPopup<DateTime?>(
       useRootNavigator: widget.cupertinoDatePickerOptions.useRootNavigator,
       context: context,
       builder: (BuildContext context) {
         final Widget modal = _CupertinoDatePickerModalSheet(
-          initialPickerDateTime: initialDateTime,
+          initialPickerDateTime: resolveInitialDateTime(),
           options: widget.cupertinoDatePickerOptions,
           use24hFormat: _use24HourFormat,
-          firstDate: firstDate,
-          lastDate: lastDate,
+          firstDate: resolveFirstDate(),
+          lastDate: resolveLastDate(),
           mode: widget.mode,
         );
 
@@ -622,7 +637,8 @@ class _DateTimeFieldState extends State<DateTimeField> {
   double get _denseButtonHeight {
     final double fontSize =
         _textStyle!.fontSize ?? Theme.of(context).textTheme.titleMedium!.fontSize!;
-    final double scaledFontSize = MediaQuery.textScalerOf(context).scale(fontSize);
+    //final double scaledFontSize = MediaQuery.textScalerOf(context).scale(fontSize);
+    final double scaledFontSize = fontSize * MediaQuery.of(context).textScaleFactor;
     return math.max(scaledFontSize, _kDenseButtonHeight);
   }
 
@@ -760,7 +776,7 @@ class _CupertinoDatePickerModalSheetState extends State<_CupertinoDatePickerModa
                   minimumDate: widget.firstDate,
                   maximumDate: widget.lastDate,
                   use24hFormat: widget.use24hFormat,
-                  showDayOfWeek: widget.options.showDayOfWeek,
+                  //showDayOfWeek: widget.options.showDayOfWeek,
                   minuteInterval: widget.options.minuteInterval,
                 ),
               ),
