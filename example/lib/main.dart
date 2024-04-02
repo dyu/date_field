@@ -4,6 +4,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart' if (dart.library.html) 'package:intl/intl_browser.dart';
 
+final DateFormat DF_MDY = DateFormat('MM/dd/yyyy');
+final DateFormat DF_YMD = DateFormat('yyyy/MM/dd');
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await findSystemLocale();
@@ -95,7 +98,7 @@ class _FieldsState extends State<Fields> {
             helperText: 'YYYY/MM/DD',
           ),
           value: selectedDate,
-          dateFormat: DateFormat.yMd(),
+          dateFormat: DF_YMD,
           mode: DateTimeFieldPickerMode.date,
           onChanged: (DateTime? value) {
             setState(() {
@@ -152,6 +155,7 @@ class FormFields extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               DateTimeFormField(
+                dateFormat: DF_MDY,
                 decoration: const InputDecoration(labelText: 'Enter Date'),
                 mode: DateTimeFieldPickerMode.date,
                 onChanged: (DateTime? value) {
